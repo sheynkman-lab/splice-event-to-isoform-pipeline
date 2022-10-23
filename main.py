@@ -1,4 +1,6 @@
 import pandas as pd
+from makeEvents import *
+from structures import *
 
 def main():
     # step 0: determine source of SR data
@@ -6,7 +8,7 @@ def main():
     lrSource = "pacbio"
 
     #implement later: if statement for source event types, to accommodate variation
-    eventTypes = ("se", "mxe", "ri", "a3ss", "a5ss")
+    eventTypes = ("se", "mxe", "a3ss", "a5ss")
     # init empty dictionary for tool
     eventDict = {}
 
@@ -18,9 +20,6 @@ def main():
             
         elif eventType == "mxe":
             mxe = pd.read_csv(filepath, index_col = 0)
-            
-        elif eventType == "ri":
-            ri = pd.read_csv(filepath, index_col = 0)
                     
         elif eventType == "a3ss":
             a3ss = pd.read_csv(filepath, index_col = 0)
@@ -39,7 +38,6 @@ def main():
 ##        eventDict = makeEvents(eval(eventType), srSource, eventType, eventDict)
     eventDict = makeEvents(se, srSource, "se", eventDict)
     eventDict = makeEvents(mxe, srSource, "mxe", eventDict)
-    eventDict = makeEvents(ri, srSource, "ri", eventDict)
     eventDict = makeEvents(a3ss, srSource, "a3ss", eventDict)
     eventDict = makeEvents(a5ss, srSource, "a5ss", eventDict)
     #print(eventDict)

@@ -1,10 +1,11 @@
 import pandas as pd
+from structures import *
 # note: ISSUE LINE 62: rMATS IDs are only unique in local scope of event type!
 # note: how do i define junction coordinates for retained intron? 
                 
 def makeEvents(df, source, eventType, eventDict):
     #eventDict should be an empty dictionary...
-    eventTypes = ("se", "mxe", "ri", "a3ss", "a5ss")
+    eventTypes = ("se", "mxe", "a3ss", "a5ss")
 
 ##  make sure event type is real
     if eventType not in eventTypes:
@@ -37,13 +38,6 @@ def makeEvents(df, source, eventType, eventDict):
             upstream = df.iloc[i, 12]
             downstream = df.iloc[i, 13]
             newEvent = MXE(source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, exon1, exon2, upstream, downstream)
-            eventDict[eventid] = newEvent
-            
-        elif eventType == "ri":
-            exonir = df.iloc[i, 10]
-            upstream = df.iloc[i, 11]
-            downstream = df.iloc[i, 12]
-            newEvent = RI(source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, exonir, upstream, downstream)
             eventDict[eventid] = newEvent
             
         elif eventType == "a3ss":
