@@ -1,0 +1,52 @@
+        '''
+        things that help us determine if micro exon is real
+        - read count
+        - reproducibility across multiple databases
+        - conservation (look at CSF for conservation across mammalian species)
+        - conservation junction (dinucleotide splice site, ATGC)
+        - important in cancer: do you see it reoccurring across multiple patients, is it dramatically changing in inclusion levels w/ respect to clinical phenotype (survival, etc)
+        - inclusion levels
+        - regulation -> like dPSI
+        - molecular properties (in frame, coding, does it contain a UTR or miRNA binding site... although gloria recommends we focus on this)
+        - independent evidence that this exon exists; vaildation!
+            - what independent evidence is available
+            - false positive in the SR data, false negative in the LR data?
+            - validate splicing using rtPCR
+        '''
+'''
+what would you expect given that there's noise
+'''
+
+'''
+goal: i need a test set
+EC data
+i need to get all the different rMATS events as objects
+'''
+
+        
+        ''' do I need to co-opt an existing tool, or is it best to start from scratch
+        what are the types of questions i need to ask -> thinking about the project goals''' 
+        ''' imagine you have the mapping, all the events & the long reads --> what sample are you looking at, are you looking at a differentiation time course... 
+        imagine having event to isoform mapping that differ from sapmle to sampl e--> what fraction of events are mappable? 
+        quantitative information --> maybe what i'm intuitively picking up is that an event is a fraction, what extent supoort one vs. another form, while a transcript has fractional abundance but then multiple isoforms could have the same event'''
+        '''want to do reverse of SUPPA and show the same plots that they did (!); ''' 
+        ''' if we're comparing in our SR exploraiton, how do we do the same thing in our LR exploration, and how do we map now?'''
+        ''' always going to be a comparison between timepoints or cell types or disease/healthy or disease/severity '''
+        ''' we do have an application where we aren't necessarily comparing any states, but we do need to know the isoform that corresponds to a splice event; that's where we use systems genetics/functional genomics data to annotate a splice event that we say is correlated to disease risk'''
+        ''' but we may be in an unusual situation where the cohort data is coming from short reads where you're measuring healthy vs. disease, but the long read is not at the cohort level; strategically cllect long read data from cell lines/subset of cohort, one example where you wouldn't necessarily be comparing multiple conditions from the long read standpoint'''
+        ''' actionable: dPSI metric of some kind for isoforms'''
+        '''when you have a splicing event change, you have a + or - deltaPSI; what is happening in terms of the underlying isoform? say you have LR data that matches those two timepoints
+        in simplest case: each event corresponds to a single isoform, then what we'd say is there's more of the first isoform in the earlier timepoint, more of second isoform in latter timepoint''' 
+        ''' 
+        problem is that events map to multiple isoforms, so could there be a way, based on dPSI & event 'direction' /relative ratio of full length isoforms, to assess how well do the two views of the same phenomenon match
+        CONFIDENCE SCORE!!!
+        '''
+
+        '''
+        1. confidence of the connection between the event and the isoform and the protein sequences affected
+            now that you have that, you can think about the biochemical functions (structure, domains, etc)
+            once you get there, there's another layer that is "how do these biochemical functions work together to achieve a process, biological role for the cell"
+        2. 
+        do i know what's out there? --> specific task in mind for isoform delta PSI in a more directed manner
+            can i describe, clearly, what has been done in terms of event to isoform mapping
+        '''
