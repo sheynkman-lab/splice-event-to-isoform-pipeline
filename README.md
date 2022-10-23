@@ -4,7 +4,7 @@ Shay's splice event to isoform integration pipeline
 ### structures.py: 
 - all classes will be stored here
     - Event superclass
-        - SE, MXE, RI, A3SS, A5SS subclasses 
+        - SE, MXE, A3SS, A5SS subclasses (missing RI)
             - Subclasses have a method defining inclusion & exclusion junction strings
     - To do: Transcript superclass (all isoforms of a gene)
         -  Isoform subclass (specific isoforms within a gene)
