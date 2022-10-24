@@ -52,3 +52,75 @@ RI %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/riToy.csv"
 ```
 
 
+```{r}
+sdypath <- "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_ENCFF370SDY.gtf"
+cgkpath <- "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_ENCFF422CGK.gtf"
+uqopath <- "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_ENCFF544UQO.gtf"
+aykpath <- "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_ENCFF610AYK.gtf"
+dwvpath <- "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_ENCFF798DWV.gtf"
+```
+
+```{r}
+sdygtf <- rtracklayer::import(sdypath)
+cgkgtf <- rtracklayer::import(cgkpath)
+uqogtf <- rtracklayer::import(uqopath)
+aykgtf <- rtracklayer::import(aykpath)
+dwvgtf <- rtracklayer::import(dwvpath)
+```
+
+```{r}
+#cleaning
+rm(sdypath, cgkpath, uqopath, aykpath, dwvpath)
+```
+
+```{r}
+sdy = sdygtf %>% as.data.frame() 
+cgk = cgkgtf %>% as.data.frame()
+uqo = uqogtf %>% as.data.frame() 
+ayk = aykgtf %>% as.data.frame()
+dwv = dwvgtf %>% as.data.frame()
+```
+
+```{r}
+rm(aykgtf, cgkgtf, dwvgtf, sdygtf, uqogtf)
+```
+
+```{r}
+sdy = sdy %>% as.data.frame() %>% select(seqnames, start, end, width, strand, type, gene_id, gene_name, exon_id, exon_number, transcript_id, transcript_name) %>% mutate("source" = "sdy")
+cgk = cgk %>% as.data.frame() %>% select(seqnames, start, end, width, strand, type, gene_id, gene_name, exon_id, exon_number, transcript_id, transcript_name) %>% mutate("source" = "cgk")
+uqo = uqo %>% as.data.frame() %>% select(seqnames, start, end, width, strand, type, gene_id, gene_name, exon_id, exon_number, transcript_id, transcript_name) %>% mutate("source" = "uqo")
+ayk = ayk %>% as.data.frame() %>% select(seqnames, start, end, width, strand, type, gene_id, gene_name, exon_id, exon_number, transcript_id, transcript_name) %>% mutate("source" = "ayk")
+dwv = dwv %>% as.data.frame() %>% select(seqnames, start, end, width, strand, type, gene_id, gene_name, exon_id, exon_number, transcript_id, transcript_name) %>% mutate("source" = "dwv")
+```
+
+```{r}
+sdy %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/sdy.csv")
+cgk %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/cgk.csv")
+uqo %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/uqo.csv")
+ayk %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/ayk.csv")
+dwv %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/dwv.csv")
+```
+
+```{r}
+aykshort = ayk %>% head(20)
+aykshort %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/aykshort.csv")
+```
+
+```{r}
+sdy %>% group_by(transcript_id) %>%
+  initialize TranscriptDict
+  for each transcript_id:
+    initialize dictionary ExonsDict
+      for each entry in the transcript:
+            if type == exon:
+              key = sdy.exon_number
+              start = sdy.start
+              stop = sdy.stop
+              exoncoords = [start, stop]
+              ExonsDict[key] = exon
+              # returns like
+              {1: [100, 200], 2: [300, 400]}
+      TranscriptDict[transcript_id] = ExonsDict
+      
+```
+

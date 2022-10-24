@@ -1,6 +1,7 @@
 import pandas as pd
 from makeEvents import *
 from structures import *
+from getTranscripts import *
 import os
 from gtfparse import read_gtf
 
@@ -14,7 +15,6 @@ def main():
     # init empty dictionary for tool
     eventDict = {}
 
-    #there has to be a 
     for eventType in eventTypes:
         filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-rmats-maserproc/" + eventType + "Toy.csv"
         if eventType == "se":
@@ -36,18 +36,13 @@ def main():
     eventDict = makeEvents(mxe, srSource, "mxe", eventDict)
     eventDict = makeEvents(a3ss, srSource, "a3ss", eventDict)
     eventDict = makeEvents(a5ss, srSource, "a5ss", eventDict)
+    print(eventDict)
 
-    #Loading in PacBio data
+    filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/aykshort.csv"
+    transcriptDict = getTranscripts(filepath)
+    #eventDict has all events
+    #transcriptDict has all transcripts 
     
-    uqoPath = "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_ENCFF544UQO.gtf"
-    print(uqoPath)
-    df = read_gtf(uqoPath)
-    print(df.shape)
+    
 
-    testvar = 0
-    for index, row in df.iterrows():
-        if row["feature"] == " ":
-            testvar += 1
-    print(testvar)
-    
 main()

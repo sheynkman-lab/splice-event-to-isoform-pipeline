@@ -3,7 +3,8 @@ from structures import *
 # note: ISSUE LINE 62: rMATS IDs are only unique in local scope of event type!
 # note: how do i define junction coordinates for retained intron? 
                 
-def makeEvents(df, source, eventType, eventDict):
+def makeEvents(df, source, eventType):
+    eventDict = {}
     #eventDict should be an empty dictionary...
     eventTypes = ("se", "mxe", "a3ss", "a5ss")
 

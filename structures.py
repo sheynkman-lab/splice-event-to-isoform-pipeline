@@ -1,3 +1,4 @@
+from tabnanny import NannyNag
 import pandas as pd
 
 ### ________ CLASSES ___________
@@ -143,3 +144,26 @@ class A5SS(Event):
         exclusion = exonshortList[1] + "-" + exonflankingList[0]
         return(exclusion)
 
+### QUICK ISOFORM CLASSES
+
+class Transcript():
+    def __init__(self, transcript_id, ExonsDict):
+        self.transcript_id = transcript_id
+        self.ExonsDict = ExonsDict
+        self.junctionString = Transcript.makeJunctionString(self)
+    
+    def __str__(self):
+        printstring = self.transcript_id + " --> " + self.junctionString
+        return(printstring)
+
+    def makeJunctionString(self):
+        #ExonsDict = {1: [70928, 70945], 2: [66346, 66499]}
+        junctionString = ""
+        for i in self.ExonsDict:
+            if i+1 in self.ExonsDict:
+                exon = self.ExonsDict[i]
+                next_exon = self.ExonsDict[i+1]
+                junction = str(exon[1]) + "-" + str(next_exon[0])
+                junctionString = junctionString + junction + ":"
+        return junctionString
+            
