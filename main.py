@@ -1,6 +1,8 @@
 import pandas as pd
 from makeEvents import *
 from structures import *
+import os
+from gtfparse import read_gtf
 
 def main():
     # step 0: determine source of SR data
@@ -14,7 +16,7 @@ def main():
 
     #there has to be a 
     for eventType in eventTypes:
-        filepath = "/Volumes/sheynkman/projects/shay_thesis/data/toy-rmats-maserproc/" + eventType + "Toy.csv"
+        filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-rmats-maserproc/" + eventType + "Toy.csv"
         if eventType == "se":
             se = pd.read_csv(filepath, index_col = 0)
             
@@ -29,20 +31,23 @@ def main():
 
         else:
             print("Error: event type not registered")
-
-    #THIS IS INEFFICIENT; JUST TESTING IF IT WORKS! 
-    #eventDict = makeEvents(se, srSource, "se", eventDict)
-    #eventDict = makeEvents(mxe, srSource, "mxe", eventDict)
-
-##    for eventType in eventTypes:
-##        eventDict = makeEvents(eval(eventType), srSource, eventType, eventDict)
+    
     eventDict = makeEvents(se, srSource, "se", eventDict)
     eventDict = makeEvents(mxe, srSource, "mxe", eventDict)
     eventDict = makeEvents(a3ss, srSource, "a3ss", eventDict)
     eventDict = makeEvents(a5ss, srSource, "a5ss", eventDict)
-    #print(eventDict)
-    #print(len(eventDict))
 
-##    Looping thru event maker function
-##    for eventType in eventTypes:
-##        makeEvents(eventType, srSource, eventType, eventDict)
+    #Loading in PacBio data
+    
+    uqoPath = "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_ENCFF544UQO.gtf"
+    print(uqoPath)
+    df = read_gtf(uqoPath)
+    print(df.shape)
+
+    testvar = 0
+    for index, row in df.iterrows():
+        if row["feature"] == " ":
+            testvar += 1
+    print(testvar)
+    
+main()
