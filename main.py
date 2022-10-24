@@ -2,6 +2,7 @@ import pandas as pd
 from makeEvents import *
 from structures import *
 from getTranscripts import *
+from getEvents import *
 import os
 from gtfparse import read_gtf
 
@@ -32,17 +33,17 @@ def main():
         else:
             print("Error: event type not registered")
     
-    eventDict = makeEvents(se, srSource, "se", eventDict)
-    eventDict = makeEvents(mxe, srSource, "mxe", eventDict)
-    eventDict = makeEvents(a3ss, srSource, "a3ss", eventDict)
-    eventDict = makeEvents(a5ss, srSource, "a5ss", eventDict)
-    print(eventDict)
-
+    eventDict = getEvents(se, srSource, "se", eventDict)
+    eventDict = getEvents(mxe, srSource, "mxe", eventDict)
+    eventDict = getEvents(a3ss, srSource, "a3ss", eventDict)
+    eventDict = getEvents(a5ss, srSource, "a5ss", eventDict)
+    #print(eventDict)
+    
     filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/aykshort.csv"
     transcriptDict = getTranscripts(filepath)
-    #eventDict --> unique eventID: Event object
-    #transcriptDict --> transcript_id: Transcript object
-    
+    #print transcriptDict
+
+    map(eventDict, transcriptDict)
 
 
 main()

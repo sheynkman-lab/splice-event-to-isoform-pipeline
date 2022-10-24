@@ -1,6 +1,6 @@
 import pandas as pd
-from makeEvents import *
 from structures import *
+from getEvents import *
 from getTranscripts import *
 import os
 from gtfparse import read_gtf
@@ -20,29 +20,6 @@ from gtfparse import read_gtf
             #dict[transcript_id] = eventList
     #return the dictionary
 
-
-def main():
-    srSource = "rmats"
-    lrSource = "pacbio"
-    eventTypes = ("se", "mxe", "a3ss", "a5ss")
-    eventDict = {}
-    for eventType in eventTypes:
-        filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-rmats-maserproc/" + eventType + "TCF3.csv"
-        if eventType == "se":
-            se = pd.read_csv(filepath, index_col = 0)
-        elif eventType == "mxe":
-            mxe = pd.read_csv(filepath, index_col = 0)   
-        elif eventType == "a3ss":
-            a3ss = pd.read_csv(filepath, index_col = 0)
-        elif eventType == "a5ss":
-            a5ss = pd.read_csv(filepath, index_col = 0)
-        else:
-            print("Error: event type not registered")
+def map(eventDict, transcriptDict):
+    mapDict = {}
     
-    eventDict = makeEvents(se, srSource, "se", eventDict)
-    eventDict = makeEvents(mxe, srSource, "mxe", eventDict)
-    eventDict = makeEvents(a3ss, srSource, "a3ss", eventDict)
-    eventDict = makeEvents(a5ss, srSource, "a5ss", eventDict)
-    print(eventDict)
-
-main()

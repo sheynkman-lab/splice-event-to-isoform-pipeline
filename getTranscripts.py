@@ -5,6 +5,7 @@ from structures import *
 import os
 from gtfparse import read_gtf
 
+
 def getTranscripts(filepath):
     # making assumption that PacBio data has been converted into csv file w/ tidy_df()
     df = pd.read_csv(filepath, index_col = 0)
