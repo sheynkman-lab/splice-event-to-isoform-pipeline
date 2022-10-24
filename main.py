@@ -40,9 +40,9 @@ def main():
 
     filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/aykshort.csv"
     transcriptDict = getTranscripts(filepath)
-    #eventDict has all events
-    #transcriptDict has all transcripts 
+    #eventDict --> unique eventID: Event object
+    #transcriptDict --> transcript_id: Transcript object
     
-    
+
 
 main()

@@ -38,6 +38,9 @@ A5SS <- summary(ips.s1s2, type = "A5SS")[] %>% as.data.frame() %>% mutate("Event
 A3SS <- summary(ips.s1s2, type = "A3SS")[] %>% as.data.frame() %>% mutate("EventType" = rep("A3SS")) %>% filter(Chr == "chr19") %>% filter(FDR < 0.05)
 ```
 
+```{r}
+rm(ips.s1s2, ips.s1s2.path)
+```
 
 ```{r}
 SE %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/seToy.csv")
@@ -106,21 +109,37 @@ aykshort = ayk %>% head(20)
 aykshort %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/aykshort.csv")
 ```
 
+```{r finding a filter candidate gene}
+ayk_genes <- ayk$gene_name
+SE_genes <- SE$geneSymbol
+MXE_genes <- MXE$geneSymbol
+A3SS_genes <- A3SS$geneSymbol
+A5SS_genes <- A5SS$geneSymbol
+
+shared <- intersect(SE_genes, MXE_genes)
+
+
+shared <- intersect(ayk_genes, SE_genes) %>% unique()
+
+shared_ayk <- ayk %>% filter(gene_name %in% shared)
+shared_SE <- SE %>% filter(geneSymbol %in% shared)  
+
+sharedayk_counts <- shared_ayk %>% group_by(gene_name) %>% summarize(n = n()) %>% arrange(desc(n))
+
+sharedSE_counts <- shared_SE %>% group_by(geneSymbol) %>% summarize(n=n()) %>% arrange(desc(n))
+
+```
+
 ```{r}
-sdy %>% group_by(transcript_id) %>%
-  initialize TranscriptDict
-  for each transcript_id:
-    initialize dictionary ExonsDict
-      for each entry in the transcript:
-            if type == exon:
-              key = sdy.exon_number
-              start = sdy.start
-              stop = sdy.stop
-              exoncoords = [start, stop]
-              ExonsDict[key] = exon
-              # returns like
-              {1: [100, 200], 2: [300, 400]}
-      TranscriptDict[transcript_id] = ExonsDict
-      
+SE %>% filter(geneSymbol == "TCF3") %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/seTCF3.csv")
+```
+
+
+```{r}
+sdy %>% filter(gene_name == "TCF3") %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/sdyTCF3.csv")
+cgk %>% filter(gene_name == "TCF3") %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/cgkTCF3.csv")
+uqo %>% filter(gene_name == "TCF3") %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/uqoTCF3.csv")
+ayk %>% filter(gene_name == "TCF3") %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/aykTCF3.csv")
+dwv %>% filter(gene_name == "TCF3") %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/dwvTCF3.csv")
 ```
 
