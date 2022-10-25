@@ -1,4 +1,3 @@
-from tabnanny import NannyNag
 import pandas as pd
 
 ### ________ CLASSES ___________
@@ -34,6 +33,12 @@ class SE(Event):
         self.excjunction = SE.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
         self.excid = self.eventid + ".exc"
+        self.row = SE.rowDict(self)
+
+
+    def rowDict(self):
+        row = {"source": self.source, "eventType":self.eventType, "eventid":self.eventid, "ensg":self.ensg, "gene": self.gene, "pvalue":self.pvalue, "fdr":self.fdr, "dpsi":self.dpsi, "chrom":self.chrom, "strand":self.strand, "incjunction" : self.incjunction, "excjunction":self.excjunction, "incid":self.incid, "excid":self.excid}
+        return row
 
     def __str__(self):
         return super(SE, self).__str__()
@@ -67,6 +72,12 @@ class MXE(Event):
         self.excjunction = MXE.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
         self.excid = self.eventid + ".exc"
+        self.row = MXE.rowDict(self)
+
+
+    def rowDict(self):
+        row = {"source": self.source, "eventType":self.eventType, "eventid":self.eventid, "ensg":self.ensg, "gene": self.gene, "pvalue":self.pvalue, "fdr":self.fdr, "dpsi":self.dpsi, "chrom":self.chrom, "strand":self.strand, "incjunction" : self.incjunction, "excjunction":self.excjunction, "incid":self.incid, "excid":self.excid}
+        return row
         
 
     def __str__(self):
@@ -100,6 +111,12 @@ class A3SS(Event):
         self.excjunction = A3SS.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
         self.excid = self.eventid + ".exc"
+        self.row = A3SS.rowDict(self)
+
+
+    def rowDict(self):
+        row = {"source": self.source, "eventType":self.eventType, "eventid":self.eventid, "ensg":self.ensg, "gene": self.gene, "pvalue":self.pvalue, "fdr":self.fdr, "dpsi":self.dpsi, "chrom":self.chrom, "strand":self.strand, "incjunction" : self.incjunction, "excjunction":self.excjunction, "incid":self.incid, "excid":self.excid}
+        return row
     
     def __str__(self):
         return super(A3SS, self).__str__()
@@ -128,6 +145,12 @@ class A5SS(Event):
         self.excjunction = A5SS.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
         self.excid = self.eventid + ".exc"
+        self.row = A5SS.rowDict(self)
+
+
+    def rowDict(self):
+        row = {"source": self.source, "eventType":self.eventType, "eventid":self.eventid, "ensg":self.ensg, "gene": self.gene, "pvalue":self.pvalue, "fdr":self.fdr, "dpsi":self.dpsi, "chrom":self.chrom, "strand":self.strand, "incjunction" : self.incjunction, "excjunction":self.excjunction, "incid":self.incid, "excid":self.excid}
+        return row
 
     def __str__(self):
         return super(A5SS, self).__str__()
@@ -153,10 +176,16 @@ class Transcript():
         self.gene_name = gene_name
         self.gene_id = gene_id
         self.junctionString = Transcript.makeJunctionString(self)
+        self.row = Transcript.rowDict(self)
     
     def __str__(self):
         printstring = self.transcript_id + " --> " + self.junctionString
         return(printstring)
+
+
+    def rowDict(self):
+        row = {"transcript_id" : self.transcript_id, "ExonsDict":self.ExonsDict, "gene_name":self.gene_name, "gene_id":self.gene_id, "junctionString":self.junctionString}
+        return row
 
     def makeJunctionString(self):
         #ExonsDict = {1: [70928, 70945], 2: [66346, 66499]}

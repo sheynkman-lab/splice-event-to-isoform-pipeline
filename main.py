@@ -1,8 +1,10 @@
 import pandas as pd
-from makeEvents import *
+from map import *
+from getEvents import *
 from structures import *
 from getTranscripts import *
 from getEvents import *
+from convertToTable import *
 import os
 from gtfparse import read_gtf
 
@@ -37,13 +39,16 @@ def main():
     eventDict = getEvents(mxe, srSource, "mxe", eventDict)
     eventDict = getEvents(a3ss, srSource, "a3ss", eventDict)
     eventDict = getEvents(a5ss, srSource, "a5ss", eventDict)
-    #print(eventDict)
+    eventTable = EventDictToTable(eventDict)
     
-    filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/aykshort.csv"
+    filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/ayk.csv"
     transcriptDict = getTranscripts(filepath)
-    #print transcriptDict
+    transcriptTable = TranscriptDictToTable(transcriptDict)
 
-    map(eventDict, transcriptDict)
-
+    #transcriptTableSmall = pd.read_csv("/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/ayk_post-test.csv", index_col = 0) 
+    
+    mapTable = mappingEventsToTranscripts(eventTable, transcriptTable)
+    outputpath = "/Volumes/sheynkman/projects/shay_thesis/output/mapping_test_1.csv"
+    mapTable.to_csv(outputpath)
 
 main()

@@ -1,6 +1,6 @@
 from lib2to3.pgen2.token import RARROW
 import pandas as pd
-from makeEvents import *
+from getEvents import *
 from structures import *
 import os
 from gtfparse import read_gtf
@@ -31,7 +31,6 @@ def getTranscripts(filepath):
             #make a Transcript object for the isoform
             tmp_transcript = Transcript(transcript_id, ExonsDict, gene_name, gene_id)
             TranscriptDict[transcript_id] = tmp_transcript
-    print (TranscriptDict)
     return TranscriptDict
 
 

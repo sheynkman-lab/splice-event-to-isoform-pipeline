@@ -20,6 +20,40 @@ from gtfparse import read_gtf
             #dict[transcript_id] = eventList
     #return the dictionary
 
-def map(eventDict, transcriptDict):
-    mapDict = {}
+def mappingEventsToTranscripts(eventTable, transcriptTable):
+    #print('test begin map')
+    mapTable = pd.DataFrame(columns = ['transcript_id', 'mapped_events'])
+    for index, transcript in transcriptTable.iterrows():
+        gene = transcript["gene_name"]
+        associatedEvents = []
+        transcriptJunction = str(transcript["junctionString"])
+        for index, event in eventTable.iterrows():
+            if event["gene"] == gene:
+                incjunction = str(event["incjunction"])
+                excjunction = str(event["excjunction"])
+                if incjunction in transcriptJunction:
+                    #print("matched", event["eventid"], "to", transcript["transcript_id"])
+                    associatedEvents.append(event["incid"])
+                elif excjunction in transcriptJunction:
+                    #print("matched", event["eventid"], "to", transcript["transcript_id"])
+                    associatedEvents.append(event["excid"])
+
+        ser = pd.Series({"transcript_id": transcript["transcript_id"], "mapped_events": associatedEvents})
+        mapTable = pd.concat([mapTable, ser.to_frame().T], ignore_index = True)
     
+    print(mapTable)
+    return(mapTable)
+
+    '''
+    for transcript in transcriptTable:
+        gene = transcript.gene_name
+        associatedEvents = []
+        for event in eventTable where event.gene == gene:
+            if event.incjunctionString is in transcript.junctionString:
+                associatedEvents.append(event.incid)
+            else if event.excjunctionstring is in transcript.junctionstring:
+                associatedEvents.append(event.excid)
+        row = {"transcript_id" = transcript, "eventList" = associatedEvents}
+        ser = pd.Series(row)
+        transcriptTable = pd.concat([mapTable, ser.to_frame().T], ignore_index = True)
+    '''
