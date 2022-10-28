@@ -41,11 +41,9 @@ def main():
     eventDict = getEvents(a5ss, srSource, "a5ss", eventDict)
     eventTable = EventDictToTable(eventDict)
     
-    filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/ayk.csv"
+    filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/EC-transcript-annotation.csv"
     transcriptDict = getTranscripts(filepath)
     transcriptTable = TranscriptDictToTable(transcriptDict)
-
-    #transcriptTableSmall = pd.read_csv("/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/ayk_post-test.csv", index_col = 0) 
     
     mapTable = mappingEventsToTranscripts(eventTable, transcriptTable)
     outputpath = "/Volumes/sheynkman/projects/shay_thesis/output/mapping_test_1.csv"
