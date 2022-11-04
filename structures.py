@@ -24,11 +24,14 @@ class Event():
 ### SE CLASS
 
 class SE(Event):
-    def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, target, upstream, downstream):
+    def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, targetES, targetEE, upstreamES, upstreamEE, downstreamES, downstreamEE):
         super().__init__(source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand)
-        self.target = target
-        self.upstream = upstream
-        self.downstream = downstream
+        self.targetES = targetES
+        self.targetEE = targetEE
+        self.upstreamES = upstreamES
+        self.upstreamEE = upstreamEE
+        self.downstreamES = downstreamES
+        self.downstreamEE = downstreamEE
         self.incjunction = SE.inclusionJunctionString(self)
         self.excjunction = SE.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
@@ -44,30 +47,28 @@ class SE(Event):
         return super(SE, self).__str__()
 
     def inclusionJunctionString(self):
-        #print("target for exon" + self.eventid + " " + self.target)
-        targetList = self.target.split("-")
-        upstreamList = self.upstream.split("-")
-        downstreamList = self.downstream.split("-")
-        inclusion = upstreamList[1] + "-" + targetList[0] + ":" + targetList[1] + "-" + downstreamList[0]
+        inclusion = self.upstreamEE + "-" + self.targetES + ":" + self.targetEE + "-" + self.downstreamES
         return(inclusion)
 
     def exclusionJunctionString(self):
         #print("target for exon" + self.eventid + " " + self.target)
-        upstreamList = self.upstream.split("-")
-        downstreamList = self.downstream.split("-")
-        exclusion = upstreamList[1] + "-" + downstreamList[0]
+        exclusion = self.upstreamEE + ":" + self.downstreamES
         return(exclusion)
         
 
 ### MXE CLASS
 
 class MXE(Event):
-    def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, exon1, exon2, upstream, downstream):
+    def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, exon1ES, exon1EE, exon2ES, exon2EE, upstreamES, upstreamEE, downstreamES, downstreamEE):
         super().__init__(source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand)
-        self.exon1 = exon1
-        self.exon2 = exon2
-        self.upstream = upstream
-        self.downstream = downstream
+        self.exon1ES = exon1ES
+        self.exon1EE = exon1EE
+        self.exon2ES = exon2ES
+        self.exon2EE = exon2EE
+        self.upstreamES = upstreamES
+        self.upstreamEE = upstreamEE
+        self.downstreamES = downstreamES
+        self.downstreamEE = downstreamEE
         self.incjunction = MXE.inclusionJunctionString(self)
         self.excjunction = MXE.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
@@ -84,17 +85,11 @@ class MXE(Event):
         return super(MXE, self).__str__()
 
     def inclusionJunctionString(self):
-        upstreamList = self.upstream.split("-")
-        downstreamList = self.downstream.split("-")
-        exon1List = self.exon1.split("-")
-        inclusion = upstreamList[1] + "-" + exon1List[0] + ":" + exon1List[1] + "-" + downstreamList[0]
+        inclusion = self.upstreamEE + "-" + self.exon1ES + ":" + self.exon1EE + "-" + self.downstreamES
         return(inclusion)
     
     def exclusionJunctionString(self):
-        upstreamList = self.upstream.split("-")
-        downstreamList = self.downstream.split("-")
-        exon2List = self.exon2.split("-")
-        exclusion = upstreamList[1] + "-" + exon2List[0] + ":" + exon2List[1] + "-" + downstreamList[0]
+        exclusion = self.upstreamEE + "-" + self.exon2ES + ":" + self.exon2EE + "-" + self.downstreamES
         return(exclusion)
 
 
@@ -102,11 +97,14 @@ class MXE(Event):
 
 class A3SS(Event):
 
-    def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, exonlong, exonshort, exonflanking):
+    def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, longES, longEE, shortES, shortEE, flankingES, flankingEE):
         super().__init__(source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand)
-        self.exonlong = exonlong
-        self.exonshort = exonshort
-        self.exonflanking = exonflanking
+        self.longES = longES
+        self.longEE = longEE
+        self.shortES = shortES
+        self.shortEE = shortEE
+        self.flankingES = flankingES
+        self.flankingEE = flankingEE
         self.incjunction = A3SS.inclusionJunctionString(self)
         self.excjunction = A3SS.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
@@ -122,25 +120,24 @@ class A3SS(Event):
         return super(A3SS, self).__str__()
 
     def inclusionJunctionString(self):
-        exonlongList = self.exonlong.split("-")
-        exonflankingList = self.exonflanking.split("-")
-        inclusion = exonflankingList[1] + "-" + exonlongList[0]
+        inclusion = self.flankingEE + "-" + self.longES
         return(inclusion)
 
     def exclusionJunctionString(self):
-        exonshortList = self.exonshort.split("-")
-        exonflankingList = self.exonflanking.split("-")
-        exclusion = exonflankingList[1] + "-" + exonshortList[0]
+        exclusion = self.flankingEE + "-" + self.shortES
         return(exclusion)
 
 ### A5SS CLASS
 
 class A5SS(Event):
-    def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, exonlong, exonshort, exonflanking):
+    def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, longES, longEE, shortES, shortEE, flankingES, flankingEE):
         super().__init__(source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand)
-        self.exonlong = exonlong
-        self.exonshort = exonshort
-        self.exonflanking = exonflanking
+        self.longES = longES
+        self.longEE = longEE
+        self.shortES = shortES
+        self.shortEE = shortEE
+        self.flankingES = flankingES
+        self.flankingEE = flankingEE
         self.incjunction = A5SS.inclusionJunctionString(self)
         self.excjunction = A5SS.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
@@ -156,15 +153,11 @@ class A5SS(Event):
         return super(A5SS, self).__str__()
 
     def inclusionJunctionString(self):
-        exonlongList = self.exonlong.split("-")
-        exonflankingList = self.exonflanking.split("-")
-        inclusion = exonlongList[1] + "-" + exonflankingList[0]
+        inclusion = self.longEE + "-" + self.flankingES
         return(inclusion)
 
     def exclusionJunctionString(self):
-        exonshortList = self.exonshort.split("-")
-        exonflankingList = self.exonflanking.split("-")
-        exclusion = exonshortList[1] + "-" + exonflankingList[0]
+        exclusion = self.shortEE + "-" + self.flankingES
         return(exclusion)
 
 ### QUICK ISOFORM CLASSES

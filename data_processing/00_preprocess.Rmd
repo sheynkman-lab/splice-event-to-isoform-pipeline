@@ -69,7 +69,10 @@ rm(EC.trancript.annotation.path)
 rm(EC.ta.gtf)
 
 EC.ta = EC.ta %>% as.data.frame() %>% select(seqnames, start, end, width, strand, type, gene_id, gene_name, exon_id, exon_number, transcript_id, transcript_name)
+```
 
+
+```{r}
 EC.ta %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/EC-transcript-annotation.csv")
 ```
 
@@ -120,3 +123,30 @@ WTC11.3.ta = WTC11.3.ta %>% as.data.frame() %>% select(seqnames, start, end, wid
 
 WTC11.3.ta %>% write.csv(file = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/WTC11-3-transcript-annotation.csv")
 ```
+
+```{r}
+EC.tpm.path <- "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/EC.tsv"
+
+EC.df <- read.table(file = EC.tpm.path, sep ="\t", header = TRUE) %>% as.data.frame()
+```
+
+# TPM?
+```{r}
+EC.tpm.df <- EC.df %>% 
+  mutate(
+  "tpm" = (rep1ENCSR148IIG/sum(rep1ENCSR148IIG)) * 1e6
+  ) %>% 
+  rename(
+    "annot_transcript_id" = "transcript_id"
+  )
+
+rm(EC.df)
+```
+
+https://www.rna-seqblog.com/rpkm-fpkm-and-tpm-clearly-explained/ source
+
+```{r}
+test <- left_join(EC.ta, EC.tpm.df, by = "transcript_id")
+```
+#WHY AREN'T THE VALUES CORRESPONDING? 
+
