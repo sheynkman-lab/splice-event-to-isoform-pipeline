@@ -37,6 +37,9 @@ def getEvents(df, source, eventType, eventDict):
             eventDict[eventid] = newEvent
             
         elif eventType == "mxe":
+            pvalue = df.iloc[i, 20]
+            fdr = df.iloc[i, 21]
+            dpsi = df.iloc[i, 24]
             exon1ES = df.iloc[i, 5]
             exon1EE = df.iloc[i, 6]
             exon2ES = df.iloc[i, 7]

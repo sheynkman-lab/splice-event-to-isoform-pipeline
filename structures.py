@@ -26,12 +26,12 @@ class Event():
 class SE(Event):
     def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, targetES, targetEE, upstreamES, upstreamEE, downstreamES, downstreamEE):
         super().__init__(source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand)
-        self.targetES = targetES
-        self.targetEE = targetEE
-        self.upstreamES = upstreamES
-        self.upstreamEE = upstreamEE
-        self.downstreamES = downstreamES
-        self.downstreamEE = downstreamEE
+        self.targetES = str(targetES)
+        self.targetEE = str(targetEE)
+        self.upstreamES = str(upstreamES)
+        self.upstreamEE = str(upstreamEE)
+        self.downstreamES = str(downstreamES)
+        self.downstreamEE = str(downstreamEE)
         self.incjunction = SE.inclusionJunctionString(self)
         self.excjunction = SE.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
@@ -61,14 +61,14 @@ class SE(Event):
 class MXE(Event):
     def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, exon1ES, exon1EE, exon2ES, exon2EE, upstreamES, upstreamEE, downstreamES, downstreamEE):
         super().__init__(source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand)
-        self.exon1ES = exon1ES
-        self.exon1EE = exon1EE
-        self.exon2ES = exon2ES
-        self.exon2EE = exon2EE
-        self.upstreamES = upstreamES
-        self.upstreamEE = upstreamEE
-        self.downstreamES = downstreamES
-        self.downstreamEE = downstreamEE
+        self.exon1ES = str(exon1ES)
+        self.exon1EE = str(exon1EE)
+        self.exon2ES = str(exon2ES)
+        self.exon2EE = str(exon2EE)
+        self.upstreamES = str(upstreamES)
+        self.upstreamEE = str(upstreamEE)
+        self.downstreamES = str(downstreamES)
+        self.downstreamEE = str(downstreamEE)
         self.incjunction = MXE.inclusionJunctionString(self)
         self.excjunction = MXE.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
@@ -99,12 +99,12 @@ class A3SS(Event):
 
     def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, longES, longEE, shortES, shortEE, flankingES, flankingEE):
         super().__init__(source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand)
-        self.longES = longES
-        self.longEE = longEE
-        self.shortES = shortES
-        self.shortEE = shortEE
-        self.flankingES = flankingES
-        self.flankingEE = flankingEE
+        self.longES = str(longES)
+        self.longEE = str(longEE)
+        self.shortES = str(shortES)
+        self.shortEE = str(shortEE)
+        self.flankingES = str(flankingES)
+        self.flankingEE = str(flankingEE)
         self.incjunction = A3SS.inclusionJunctionString(self)
         self.excjunction = A3SS.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
@@ -132,12 +132,12 @@ class A3SS(Event):
 class A5SS(Event):
     def __init__(self, source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand, longES, longEE, shortES, shortEE, flankingES, flankingEE):
         super().__init__(source, eventType, eventid, ensg, gene, pvalue, fdr, dpsi, chrom, strand)
-        self.longES = longES
-        self.longEE = longEE
-        self.shortES = shortES
-        self.shortEE = shortEE
-        self.flankingES = flankingES
-        self.flankingEE = flankingEE
+        self.longES = str(longES)
+        self.longEE = str(longEE)
+        self.shortES = str(shortES)
+        self.shortEE = str(shortEE)
+        self.flankingES = str(flankingES)
+        self.flankingEE = str(flankingEE)
         self.incjunction = A5SS.inclusionJunctionString(self)
         self.excjunction = A5SS.exclusionJunctionString(self)
         self.incid = self.eventid + ".inc"
