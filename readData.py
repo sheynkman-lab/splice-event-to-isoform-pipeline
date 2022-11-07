@@ -39,6 +39,9 @@ def loadA5SS(rmatsPath, type):
 
 
 def loadLRannot(gtfpath):
+    # read in raw GTF, select columns that I want, return 
+    # currently, throwing an error where read_gtf is starting one loop, then starting another loop
+    # Where I left off before error thrown: need to make a superset of annotation from C1 and C2
     print("load LR annot: annot raw")
     annot_raw = read_gtf(gtfpath)
     print("load LR annot: selecting cols")
@@ -51,6 +54,8 @@ def loadLRquant(tsvpath, count_column_name, condition_name):
     # quantpath_c2 = "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/EC.tsv"
     # count_column_name_c1 = "rep1ENCSR507JOF"
     # count_column_name_c2 = "rep1ENCSR148IIG"
+
+    # loading the transcript quantification (for one condition)
     print("load LR quant: reading table, selecting annotation & counts")
     quant = pd.read_table(tsvpath)[["annot_transcript_id", count_column_name]]
     print("load LR quant: summing counts")
@@ -67,10 +72,12 @@ def loadLRquant(tsvpath, count_column_name, condition_name):
     return quant
 
 def calcTPM(quantrow, count_column_name, sumcounts):
+    # Helper function to apply to each row of quantification file, referenced in loadLRquant
     tpm = ((quantrow[count_column_name]/sumcounts)*1000000)
     return tpm
 
 def mergeAnnotQuants(LRannot, LRquant_c1, LRquant_c2):
+    # 
     print("merge Annot & Quants: left joining LR annotations to condition 1 TPMs (left join)")
     joined = pd.merge(LRannot, LRquant_c1, on='transcript_id', how ='left')
     print("merge Annot & Quants: left joining LR annotations to condition 2 TPMs (left join)")

@@ -10,10 +10,11 @@ def main():
     LRquant_c1 = loadLRquant("/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/WTC11-1.tsv", "rep1ENCSR507JOF", "WTC11")
     LRquant_c2 = loadLRquant("/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/EC.tsv", "rep1ENCSR148IIG", "EC")
     LRmergeddf = mergeAnnotQuants(LRannot, LRquant_c1, LRquant_c2)
-    getTranscripts(LRmergeddf)
+    # getTranscripts(LRmergeddf)
     
 
-# TO DO: REWRITE GET TRANSCRIPTS --> ADD TPM TO STRUCTURES.PY
+# TO DO: REWRITE GET TRANSCRIPTS
+
 def getTranscripts(filepath):
     # making assumption that PacBio data has been converted into csv file
     df = pd.read_csv(filepath, index_col = 0)

@@ -163,11 +163,13 @@ class A5SS(Event):
 ### QUICK ISOFORM CLASSES
 
 class Transcript():
-    def __init__(self, transcript_id, ExonsDict, gene_name, gene_id):
+    def __init__(self, transcript_id, ExonsDict, gene_name, gene_id, tpm_c1, tpm_c2):
         self.transcript_id = transcript_id
         self.ExonsDict = ExonsDict
         self.gene_name = gene_name
         self.gene_id = gene_id
+        self.tpm_c1 = tpm_c1
+        self.tpm_c2 = tpm_c2
         self.junctionString = Transcript.makeJunctionString(self)
         self.row = Transcript.rowDict(self)
     
