@@ -130,7 +130,12 @@ EC.tpm.path <- "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-
 EC.df <- read.table(file = EC.tpm.path, sep ="\t", header = TRUE) %>% as.data.frame()
 ```
 
-# TPM?
+
+```{r}
+EC.df <- EC.df %>% select(-transcript_ID)
+```
+
+# TPM
 ```{r}
 EC.tpm.df <- EC.df %>% 
   mutate(
@@ -146,7 +151,5 @@ rm(EC.df)
 https://www.rna-seqblog.com/rpkm-fpkm-and-tpm-clearly-explained/ source
 
 ```{r}
-test <- left_join(EC.ta, EC.tpm.df, by = "transcript_id")
-```
-#WHY AREN'T THE VALUES CORRESPONDING? 
-
+test <- inner_join(EC.tpm.df, EC.ta, by = "transcript_id")
+``` 

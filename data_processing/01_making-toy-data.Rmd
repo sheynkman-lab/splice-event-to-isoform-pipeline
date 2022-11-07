@@ -1,0 +1,54 @@
+---
+title: "01_making-toy-data"
+author: "Shay Iyer"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(maser)
+library(rtracklayer)
+library(gridExtra) 
+```
+
+
+```{r}
+EC.tpm.path <- "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/EC.tsv"
+
+EC.df <- read.table(file = EC.tpm.path, sep ="\t", header = TRUE) %>% as.data.frame()
+
+WTC11.1.tpm.path <- "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/WTC11-1.tsv"
+
+WTC11.1.df <- read.table(file = WTC11.1.tpm.path, sep ="\t", header = TRUE) %>% as.data.frame()
+```
+
+```{r}
+uniques.df = EC.df$annot_transcript_id %>% as.data.frame()
+```
+
+```{r}
+write.table(uniques.df, file = "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/unique_transcripts.txt", sep = "\n", row.names = FALSE, quote = FALSE)
+```
+
+```{r}
+EC.transcript.annotation.path <- "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_EC.gtf"
+
+EC.ta.gtf <- rtracklayer::import(EC.transcript.annotation.path)
+
+EC.ta <- EC.ta.gtf %>% as.data.frame()
+
+rm(EC.trancript.annotation.path)
+
+rm(EC.ta.gtf)
+```
+
+```{r}
+EC.ta <- EC.ta %>% filter(type == "transcript")
+```
+
+```{r}
+EC.ta <- EC.ta %>% filter(transcript_id %in% EC.df$annot_transcript_id)
+```
+
