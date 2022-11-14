@@ -19,11 +19,10 @@ def main():
     eventTypes = ("se", "mxe", "a3ss", "a5ss")
     eventDict = {}
 
-    se = loadSE(rmatsPath, type)
-    mxe = loadMXE(rmatsPath, type)
-    a3ss = loadA3SS(rmatsPath, type)
-    a5ss = loadA5SS(rmatsPath, type)
-    #print(a5ss.head)
+    # se = loadSE(rmatsPath, type)
+    # mxe = loadMXE(rmatsPath, type)
+    # a3ss = loadA3SS(rmatsPath, type)
+    # a5ss = loadA5SS(rmatsPath, type)
 
 
     lrannotpath = "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_EC.gtf"
@@ -39,5 +38,8 @@ def main():
     lrquant_c2 = loadLRquant(quantpath_c2, count_column_name_c2, "EC")
 
     lr_alldata = mergeAnnotQuants(lrannot, lrquant_c1, lrquant_c2)
-    getLRJunctionDF(lr_alldata)
+    JunctionDict = getLRJunctionDict(lr_alldata)
+    
+    #mergedDF = addJunctionsToTable(mergedDF, junctionsDict)
+    addJunctionsToTable(lr_alldata, JunctionDict)
 main()
