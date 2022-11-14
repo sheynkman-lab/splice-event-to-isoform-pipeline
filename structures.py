@@ -183,7 +183,15 @@ class Transcript():
         return row
 
     def makeJunctionString(self):
-        #ExonsDict = {1: [70928, 70945], 2: [66346, 66499]}
+        # ExonsDict = {1: [70928, 70945], 2: [66346, 66499]}
+        # in GTF files, features go from left to right (upstream to downstream) when looking @ chromosome as we see in Browser track
+        # if transcript is +, upstream coordinate is 5' end, downstream coordinate is 3' end
+        # if transcript is -, first feature is most upstream ("end" is actually the start of the exon)
+        # function in BioSurfer & SQANTI, etc
+        # how handling negative strand vs. positive strand
+        """
+        
+        """
         junctionString = ""
         for i in self.ExonsDict:
             if i+1 in self.ExonsDict:
@@ -191,5 +199,5 @@ class Transcript():
                 next_exon = self.ExonsDict[i+1]
                 junction = str(exon[1]) + "-" + str(next_exon[0])
                 junctionString = junctionString + junction + ":"
-        return junctionString
-            
+        return junctionString 
+

@@ -4,13 +4,6 @@ from structures import *
 import os
 from gtfparse import read_gtf
 from readData import *
-
-def main():
-    LRannot = loadLRannot("/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_EC.gtf")
-    LRquant_c1 = loadLRquant("/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/WTC11-1.tsv", "rep1ENCSR507JOF", "WTC11")
-    LRquant_c2 = loadLRquant("/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/EC.tsv", "rep1ENCSR148IIG", "EC")
-    LRmergeddf = mergeAnnotQuants(LRannot, LRquant_c1, LRquant_c2)
-    # getTranscripts(LRmergeddf)
     
 
 # TO DO: REWRITE GET TRANSCRIPTS
@@ -41,8 +34,6 @@ def getTranscripts(filepath):
             tmp_transcript = Transcript(transcript_id, ExonsDict, gene_name, gene_id)
             TranscriptDict[transcript_id] = tmp_transcript
     return TranscriptDict
-
-main()
 
 # def getTranscripts(filepath):
 #     # making assumption that PacBio data has been converted into csv file

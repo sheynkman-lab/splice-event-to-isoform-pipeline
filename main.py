@@ -31,7 +31,6 @@ def main():
     a5ss = loadA5SS(rmatsPath, type)
     print("A5SS loaded")
 
-
     #eventDict = getEvents(se, srSource, "se", eventDict)
     #eventDict = getEvents(mxe, srSource, "mxe", eventDict)
     #eventDict = getEvents(a3ss, srSource, "a3ss", eventDict)
@@ -49,12 +48,12 @@ def main():
     print("eventTable loaded")
 
     #eventTable.to_csv("/Volumes/sheynkman/projects/shay_thesis/output/rmats_events_chr19.csv")
-    #filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/EC-transcript-annotation.csv"
-    #transcriptDict = getTranscripts(filepath)
-    #transcriptTable = TranscriptDictToTable(transcriptDict)
+    filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/EC-transcript-annotation.csv"
+    transcriptDict = getTranscripts(filepath)
+    transcriptTable = TranscriptDictToTable(transcriptDict)
     
-    #mapTable = mappingEventsToTranscripts(eventTable, transcriptTable)
+    mapTable = mappingEventsToTranscripts(eventTableChr19, transcriptTable)
     #outputpath = "/Volumes/sheynkman/projects/shay_thesis/output/mapping_test_1.csv"
     #mapTable.to_csv(outputpath)
 
-main()
+#main()
