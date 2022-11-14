@@ -155,8 +155,7 @@ def getExclusionID(EventDF_row, type):
 
 def loadLRannot(gtfpath):
     # read in raw GTF, select columns that I want, return 
-    # currently, throwing an error where read_gtf is starting one loop, then starting another loop
-        # as long as gencode version is the same, i can merge ENSTs; but for novel transcripts, need to compare unique junction chains ** 
+    # as long as gencode version is the same, i can merge ENSTs; but for novel transcripts, need to compare unique junction chains ** 
     # Where I left off before error thrown: need to make a superset of annotation from C1 and C2
     annot_raw = read_gtf(gtfpath)
     LRannot = annot_raw[["gene_id", "gene_name", "transcript_id", "feature", "seqname", "strand", "exon_number", "start", "end"]]
@@ -168,7 +167,7 @@ def loadLRquant(tsvpath, count_column_name, condition_name):
     # count_column_name_c1 = "rep1ENCSR507JOF"
     # count_column_name_c2 = "rep1ENCSR148IIG"
     # loading the transcript quantification (for one condition)
-    # include raw counts in output
+    # included raw counts in output
     quant = pd.read_table(tsvpath)[["annot_transcript_id", count_column_name]]
     sumcounts = quant[count_column_name].sum()
     tpm_colname = "tpm_" + condition_name
@@ -197,7 +196,7 @@ def mergeAnnotQuants(LRannot, LRquant_c1, LRquant_c2):
     return joined
 
 
-def getLRJunctionDF(mergedDF):
+def getLRJunctionDict(mergedDF):
     grouped = mergedDF.groupby('transcript_id')
     #for all entries corresponding to each isoform
     JunctionDict = {}
@@ -217,11 +216,10 @@ def getLRJunctionDF(mergedDF):
                 ExonsDict[exon_number] = exonRange
         js = makeJunctionString(ExonsDict)
         #print(js)
-        JunctionDict[transcript_id] = js    
-    #print(JunctionDict)
+        JunctionDict[transcript_id] = js
 
     
-    #return JunctionDict
+    return JunctionDict
 
 def makeJunctionString(exonsDict):
     junctionString = ""
@@ -234,3 +232,14 @@ def makeJunctionString(exonsDict):
             if i+2 in exonsDict:
                 junctionString += ":"
     return junctionString
+
+# working on this function
+def addJunctionsToTable(mergedDF, junctionsDict):
+    transcriptDF = mergedDF[mergedDF["feature"] == "transcript"]
+    newDF = pd.DataFrame(columns = list(transcriptDF.columns))
+    # for index, row in transcriptDF.iterrows():
+    #     transcript_id = row["transcript_id"]
+    #     row["junctionString"] = junctionsDict[transcript_id]
+    #     newDF = pd.concat([newDF, row], ignore_index = True)
+    # print(newDF.head)
+    return newDF
