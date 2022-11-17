@@ -1,8 +1,8 @@
 import pandas as pd
-from getEvents import *
-from structures import *
+from archive.getEvents import *
+from archive.structures import *
 from getTranscripts import *
-from getEvents import *
+from archive.getEvents import *
 import os
 from gtfparse import read_gtf
 

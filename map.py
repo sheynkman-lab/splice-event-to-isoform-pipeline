@@ -1,6 +1,6 @@
 import pandas as pd
-from structures import *
-from getEvents import *
+from archive.structures import *
+from archive.getEvents import *
 from getTranscripts import *
 import os
 from gtfparse import read_gtf

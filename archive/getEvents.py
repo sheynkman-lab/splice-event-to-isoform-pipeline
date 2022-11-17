@@ -1,5 +1,5 @@
 import pandas as pd
-from structures import *
+from archive.structures import *
 from getTranscripts import *
 import os
 from gtfparse import read_gtf

@@ -1,59 +1,44 @@
 import pandas as pd
 from map import *
-from getEvents import *
-from structures import *
+from archive.getEvents import *
+from archive.structures import *
 from getTranscripts import *
-from getEvents import *
-from convertToTable import *
+from archive.getEvents import *
+from archive.convertToTable import *
 from readData import *
 import os
 from gtfparse import read_gtf
 
 def main():
-    # step 0: determine source of SR data
+
+    ## step 1: read rMATS data
     srSource = "rmats"
     lrSource = "pacbio"
     rmatsPath = "/Volumes/sheynkman/projects/EC_stem_cell_differentiation/001_ips-s1s2/003_ips-s1s2_output/002_ips-s1s2_rmats-out"
     type = "JCEC"
-
-    #implement later: if statement for source event types, to accommodate variation
     eventTypes = ("se", "mxe", "a3ss", "a5ss")
-    # init empty dictionary for tool
     eventDict = {}
 
-    print("loading SE")
-    se = loadSE(rmatsPath, type)
-    print("SE loaded. loading MXE")
-    mxe = loadMXE(rmatsPath, type)
-    print("MXE loaded. loading A3SS")
-    a3ss = loadA3SS(rmatsPath, type)
-    print("A3SS loaded. loading A5SS")
-    a5ss = loadA5SS(rmatsPath, type)
-    print("A5SS loaded")
+    # se = loadSE(rmatsPath, type)
+    # mxe = loadMXE(rmatsPath, type)
+    # a3ss = loadA3SS(rmatsPath, type)
+    # a5ss = loadA5SS(rmatsPath, type)
 
-    #eventDict = getEvents(se, srSource, "se", eventDict)
-    #eventDict = getEvents(mxe, srSource, "mxe", eventDict)
-    #eventDict = getEvents(a3ss, srSource, "a3ss", eventDict)
-    #eventDict = getEvents(a5ss, srSource, "a5ss", eventDict)
-    print("chr19 events, SE")
-    eventDict = getEventsByChr(se, srSource, "chr19", "se", eventDict)
-    print("chr19 events, MXE")
-    eventDict = getEventsByChr(mxe, srSource, "chr19", "mxe", eventDict)
-    print("chr19 events, A3SS")
-    eventDict = getEventsByChr(a3ss, srSource, "chr19", "a3ss", eventDict)
-    print("chr19 events, A5SS")
-    eventDict = getEventsByChr(a5ss, srSource, "chr19", "a5ss", eventDict)
-    print("loading eventTable")
-    eventTableChr19 = EventDictToTable(eventDict)
-    print("eventTable loaded")
 
-    #eventTable.to_csv("/Volumes/sheynkman/projects/shay_thesis/output/rmats_events_chr19.csv")
-    filepath = "/Volumes/sheynkman/projects/shay_thesis/data/chr19-lr-proc/EC-transcript-annotation.csv"
-    transcriptDict = getTranscripts(filepath)
-    transcriptTable = TranscriptDictToTable(transcriptDict)
-    
-    mapTable = mappingEventsToTranscripts(eventTableChr19, transcriptTable)
-    #outputpath = "/Volumes/sheynkman/projects/shay_thesis/output/mapping_test_1.csv"
-    #mapTable.to_csv(outputpath)
+    lrannotpath = "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_EC.gtf"
 
-#main()
+    lrannot = loadLRannot(lrannotpath)
+
+    quantpath_c1 = "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/WTC11-1.tsv"
+    quantpath_c2 = "/Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/EC.tsv"
+    count_column_name_c1 = "rep1ENCSR507JOF"
+    count_column_name_c2 = "rep1ENCSR148IIG"
+
+    lrquant_c1 = loadLRquant(quantpath_c1, count_column_name_c1, "WTC11-1")
+    lrquant_c2 = loadLRquant(quantpath_c2, count_column_name_c2, "EC")
+
+    lr_alldata = mergeAnnotQuants(lrannot, lrquant_c1, lrquant_c2)
+    #JunctionDict = getLRJunctionDict(lr_alldata) 
+    # addJunctionsToTable(lr_alldata, JunctionDict)
+    # map(lr_alldata, [se, mxe, a3ss, a5ss])
+main()

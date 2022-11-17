@@ -152,7 +152,6 @@ def getExclusionID(EventDF_row, type):
 
 ############## LONG READ DATA READING ###################
 
-
 def loadLRannot(gtfpath):
     # read in raw GTF, select columns that I want, return 
     # as long as gencode version is the same, i can merge ENSTs; but for novel transcripts, need to compare unique junction chains ** 
@@ -217,8 +216,6 @@ def getLRJunctionDict(mergedDF):
         js = makeJunctionString(ExonsDict)
         #print(js)
         JunctionDict[transcript_id] = js
-
-    
     return JunctionDict
 
 def makeJunctionString(exonsDict):
@@ -232,6 +229,7 @@ def makeJunctionString(exonsDict):
             if i+2 in exonsDict:
                 junctionString += ":"
     return junctionString
+
 
 # working on this function
 def addJunctionsToTable(mergedDF, junctionsDict):
