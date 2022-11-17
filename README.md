@@ -16,3 +16,4 @@
 ## Running script:
     - Run main.py to load in short read and long read data as Pandas dataframe
         - references readData.py to load in short read events as Pandas df, construct junction strings for inclusion/exclusion events, append event type/inclusion/exclusion-specific IDs, load annotation file into pandas, load quantification files into pandas, merge, calculate TPM
+        - main.py also constructs a dictionary of {transcript_id:junctionString} based on long read GTF
