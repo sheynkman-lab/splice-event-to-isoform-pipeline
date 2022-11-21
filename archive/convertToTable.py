@@ -1,7 +1,7 @@
 import pandas as pd
 from archive.getEvents import *
 from archive.structures import *
-from getTranscripts import *
+from LIME.getTranscripts import *
 from archive.getEvents import *
 import os
 from gtfparse import read_gtf

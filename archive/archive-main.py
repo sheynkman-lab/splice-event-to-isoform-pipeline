@@ -1,11 +1,11 @@
 import pandas as pd
-from map import *
+from LIME.map import *
 from archive.getEvents import *
 from archive.structures import *
-from getTranscripts import *
+from LIME.getTranscripts import *
 from archive.getEvents import *
 from archive.convertToTable import *
-from readData import *
+from LIME.readData import *
 import os
 from gtfparse import read_gtf
 

@@ -1,6 +1,6 @@
 import pandas as pd
 from archive.structures import *
-from getTranscripts import *
+from LIME.getTranscripts import *
 import os
 from gtfparse import read_gtf
 

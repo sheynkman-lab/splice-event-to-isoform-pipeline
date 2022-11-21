@@ -3,7 +3,7 @@ from archive.getEvents import *
 from archive.structures import *
 import os
 from gtfparse import read_gtf
-from readData import *
+from LIME.readData import *
     
 
 # TO DO: REWRITE GET TRANSCRIPTS
