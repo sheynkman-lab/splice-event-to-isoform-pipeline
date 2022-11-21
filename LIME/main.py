@@ -5,7 +5,8 @@ from readData import *
 from gtfparse import read_gtf
 
 
-@click.command("load_data")
+@click.command()
+
 @click.option('--condition1', required = True, help = "specify name of condition 1")
 @click.option('--condition2', required = True, help = "specify name of condition 2")
 @click.option('--rmats_out_folder', required = True, type = click.Path(exists = True, path_type=Path), help = "Path to output of rMATS")
@@ -18,7 +19,7 @@ from gtfparse import read_gtf
 @click.option('--c2quant', required = True, type = click.Path(exists = True, path_type=Path), help = "Path to long read quantification TSV for condition 2")
 @click.option('-o', '--outputpath', type = click.Path(exists = True, path_type = Path), help = "Path to output. Default '.'")
 
-def main(condition1: str, condition2: str, rmats_out_folder: Path, type: str, c1_quantcol: str, c2_quantcol: str, c1annot: Path, c1quant: Path, c2quant: Path, outputpath: Path):
+def cli(condition1: str, condition2: str, rmats_out_folder: Path, type: str, c1_quantcol: str, c2_quantcol: str, c1annot: Path, c1quant: Path, c2quant: Path, outputpath: Path):
     click.echo('')
     se = loadSE(rmats_out_folder, type)
     mxe = loadMXE(rmats_out_folder, type)
@@ -35,4 +36,3 @@ def main(condition1: str, condition2: str, rmats_out_folder: Path, type: str, c1
     # addJunctionsToTable(lr_alldata, JunctionDict)
     # map(lr_alldata, [se, mxe, a3ss, a5ss])
     
-main()

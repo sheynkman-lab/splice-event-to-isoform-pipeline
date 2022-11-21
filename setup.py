@@ -12,12 +12,15 @@ setup(
     license='MIT',
     zip_safe = False,
     include_package_data = True,
+    install_requires=[
+        'Click',
+    ],
     packages =
         ['LIME'],
     python_requires = '>=3',
     entry_points = {
         'console_scripts':[
-            'LIME = LIME.main:main',
+            'lime = LIME.main:cli',
         ],
     },
 )
