@@ -8,7 +8,6 @@
 ### Files and folders needed to run LIME** 
 #### rMATS output
 - Output folder of rMATS
-**For Gloria: path is /project/sheynkman/projects/EC_stem_cell_differentiation/001_ips-s1s2/003_ips-s1s2_output/002_ips-s1s2_rmats-out**
 #### Long-read RNA sequencing data corresponding to conditions compared in rMATS
 - Condition 1
     - Annotation file: .gtf
