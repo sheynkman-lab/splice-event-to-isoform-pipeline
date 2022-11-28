@@ -18,6 +18,7 @@
 
 ## Instructions
 ### The following parameters are necessary to run LIME
+``` 
   --condition1 TEXT        Name of condition 1
   --condition2 TEXT        Name of condition 2
   --rmats_out_folder PATH  Path to output of rMATS
@@ -33,7 +34,7 @@
   --c2quant PATH           Path to long read quantification TSV for condition
                            2
   -o, --outputpath PATH    Path to output
-
+``` 
 For a list of commands, run lime --help
 
 ### Run process
