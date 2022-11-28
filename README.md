@@ -40,12 +40,12 @@ For a list of commands, run lime --help
 ### Run process
 #### Step 0: Navigate to main repository folder (should be named splice-event-to-isoform-pipeline)
 #### Step 1: Ensure you have the python packages Click, gtfparse, and pandas installed. If necessary, create a conda environment and activate using the following command:
-> conda activate LIME
+``` conda activate LIME ```
 #### Step 2: Run the following command to install LIME:
-> pip install --editable .
+``` pip install --editable . ```
 #### run LIME with the following command line prompt
-> lime --condition1 --condition2 --rmats_out_folder --type --c1_quantcol --c2_quantcol --c1annot --c1quant --c2quant --outputpath
+``` lime --condition1 --condition2 --rmats_out_folder --type --c1_quantcol --c2_quantcol --c1annot --c1quant --c2quant --outputpath ```
 
-**For Gloria: run.sh has the lime command line prompt configured with paths to the tester input files in project storage. Please run the following command in your terminal after cloning the repository and navigating to the main folder splice-event-to-isoform-pipeline in Terminal:**
-> bash run.sh
+> For Gloria: run.sh has the lime command line prompt configured with paths to the tester input files in project storage. Please run the following command in your terminal after cloning the repository and navigating to the main folder splice-event-to-isoform-pipeline in Terminal:
+``` bash run.sh ```
 
