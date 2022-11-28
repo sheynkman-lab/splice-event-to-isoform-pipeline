@@ -193,8 +193,7 @@ def mergeAnnotQuants(LRannot, LRquant_c1, LRquant_c2):
     #print(joined.tail(20))
     
     return joined
-
-
+    
 def getLRJunctionDict(mergedDF):
     grouped = mergedDF.groupby('transcript_id')
     #for all entries corresponding to each isoform
@@ -214,7 +213,6 @@ def getLRJunctionDict(mergedDF):
                 exonRange = [start, stop]
                 ExonsDict[exon_number] = exonRange
         js = makeJunctionString(ExonsDict)
-        #print(js)
         JunctionDict[transcript_id] = js
     return JunctionDict
 

@@ -1,5 +1,5 @@
 import pandas as pd
-from LIME.map import *
+from archive.map import *
 from archive.getEvents import *
 from archive.structures import *
 from LIME.getTranscripts import *
