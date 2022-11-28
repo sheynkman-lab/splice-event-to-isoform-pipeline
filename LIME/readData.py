@@ -5,7 +5,7 @@ from gtfparse import read_gtf
 
 ## loading all the event data
 def loadSE(rmatsPath, type): 
-    SEpath = rmatsPath + "/SE.MATS." + type + ".txt"
+    SEpath = str(rmatsPath) + "/SE.MATS." + type + ".txt"
     if not os.path.exists(SEpath):
         raise Exception("path not found: " + SEpath)
 
@@ -18,7 +18,7 @@ def loadSE(rmatsPath, type):
     return SE
 
 def loadMXE(rmatsPath, type): 
-    MXEpath = rmatsPath + "/MXE.MATS." + type + ".txt"
+    MXEpath = str(rmatsPath) + "/MXE.MATS." + type + ".txt"
     if not os.path.exists(MXEpath):
         raise Exception("path not found: " + MXEpath)
 
@@ -32,7 +32,7 @@ def loadMXE(rmatsPath, type):
     return MXE
 
 def loadA3SS(rmatsPath, type): 
-    A3SSpath = rmatsPath + "/A3SS.MATS." + type + ".txt"
+    A3SSpath = str(rmatsPath) + "/A3SS.MATS." + type + ".txt"
     if not os.path.exists(A3SSpath):
         raise Exception("path not found: " + A3SSpath)
 
@@ -45,7 +45,7 @@ def loadA3SS(rmatsPath, type):
     return A3SS
 
 def loadA5SS(rmatsPath, type): 
-    A5SSpath = rmatsPath + "/A5SS.MATS." + type + ".txt"
+    A5SSpath = str(rmatsPath) + "/A5SS.MATS." + type + ".txt"
     if not os.path.exists(A5SSpath):
         raise Exception("path not found: " + A5SSpath)
 

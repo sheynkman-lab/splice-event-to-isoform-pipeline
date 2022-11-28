@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: LIME-Long-read-Isoform-Mapping-to-Events
+Version: 0.1
+Home-page: https://github.com/sheynkman-lab/splice-event-to-isoform-pipeline
+Author: Sheynkman Lab
+Author-email: sheynkman.lab@gmail.com
+License: MIT
+Requires-Python: >=3
+License-File: LICENSE

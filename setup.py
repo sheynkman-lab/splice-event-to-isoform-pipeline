@@ -14,13 +14,15 @@ setup(
     include_package_data = True,
     install_requires=[
         'Click',
+        'gtfparse',
+        'pandas',
     ],
     packages =
         ['LIME'],
     python_requires = '>=3',
     entry_points = {
         'console_scripts':[
-            'lime = LIME.main:cli',
+            'lime=LIME.main:cli',
         ],
     },
 )

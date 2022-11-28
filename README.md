@@ -1,20 +1,51 @@
-# Long-read Isoform Mapping to (Alternative Splicing) Events (LIME) (or LIMASE) (this is a working title)
+# Welcome to LIME (Long-read Isoform Mapping to (alternative splicing) Events)
+**Contents**
 
-## Data input
-> Currently, data is stored in Sheynkman Lab project storage; description of input data will be followed by a path to the corresponding files in project storage
+- [Data](#data)
+- [Instructions](#instructions)
 
-- Short read alternative splicing events 
-    - Please supply a pathway to rMATS output *folder* 
-        - In project storage: /Volumes/sheynkman/projects/EC_stem_cell_differentiation/001_ips-s1s2/003_ips-s1s2_output/002_ips-s1s2_rmats-out  
-- Long read sequencing data
-    - Transcript annotation and quantification files for condition 1 and condition 2 should be placed a separate folder from rMATS output data; when running main.py (upon implementation of argparse) please supply absolute paths for all four files
-    - Transcript annotation file (GTF) for condition 1:
-        - In project storage: /Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/03_chr19_gtfs/chr19_EC.gtf
-    - Transcript quantification file (TSV) for condition 1 and condition 2:
-        - In project storage, condition 1: /Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/WTC11-1.tsv"
-        - In project storage, condition 2: /Volumes/sheynkman/projects/shay_thesis/data/EC-LR/long-read-EC-data/01_tsv/EC.tsv
+## Data
+### Files and folders needed to run LIME** 
+#### rMATS output
+- Output folder of rMATS
+**For Gloria: path is /project/sheynkman/projects/EC_stem_cell_differentiation/001_ips-s1s2/003_ips-s1s2_output/002_ips-s1s2_rmats-out**
+#### Long-read RNA sequencing data corresponding to conditions compared in rMATS
+- Condition 1
+    - Annotation file: .gtf
+    - Transcript quantification file: .tsv
+        - Note: examine .tsv file to identify the name of the column containing transcript raw count data
+- Condition 2
+    - Transcript quantification file: .tsv
 
-## Running script:
-    - Run main.py to load in short read and long read data as Pandas dataframe
-        - references readData.py to load in short read events as Pandas df, construct junction strings for inclusion/exclusion events, append event type/inclusion/exclusion-specific IDs, load annotation file into pandas, load quantification files into pandas, merge, calculate TPM
-        - main.py also constructs a dictionary of {transcript_id:junctionString} based on long read GTF
+## Instructions
+### The following parameters are necessary to run LIME
+  --condition1 TEXT        Name of condition 1
+  --condition2 TEXT        Name of condition 2
+  --rmats_out_folder PATH  Path to output of rMATS
+  -t, --type TEXT          specify whether using JC or JCEC read-based data
+                           from rMATS output (to do: update this to be a selector option)
+  --c1_quantcol TEXT       name of condition 1 quantification.tsv column
+                           corresponding to condition 1 counts
+  --c2_quantcol TEXT       name of condition 2 quantification.tsv column
+                           corresponding to condition 2 counts
+  --c1annot PATH           Path to long read annotation GTF for condition 1
+  --c1quant PATH           Path to long read quantification TSV for condition
+                           1
+  --c2quant PATH           Path to long read quantification TSV for condition
+                           2
+  -o, --outputpath PATH    Path to output
+
+For a list of commands, run lime --help
+
+### Run process
+#### Step 0: Navigate to main repository folder (should be named splice-event-to-isoform-pipeline)
+#### Step 1: Ensure you have the python packages Click, gtfparse, and pandas installed. If necessary, create a conda environment and activate using the following command:
+> conda activate LIME
+#### Step 2: Run the following command to install LIME:
+> pip install --editable .
+#### run LIME with the following command line prompt
+> lime --condition1 --condition2 --rmats_out_folder --type --c1_quantcol --c2_quantcol --c1annot --c1quant --c2quant --outputpath
+
+**For Gloria: run.sh has the lime command line prompt configured with paths to the tester input files in project storage. Please run the following command in your terminal after cloning the repository and navigating to the main folder splice-event-to-isoform-pipeline in Terminal:**
+> bash run.sh
+

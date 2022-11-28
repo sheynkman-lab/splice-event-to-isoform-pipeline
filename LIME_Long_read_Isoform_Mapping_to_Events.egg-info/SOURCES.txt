@@ -1,0 +1,15 @@
+LICENSE
+README.md
+setup.cfg
+setup.py
+LIME/getTranscripts.py
+LIME/main.py
+LIME/map.py
+LIME/readData.py
+LIME_Long_read_Isoform_Mapping_to_Events.egg-info/PKG-INFO
+LIME_Long_read_Isoform_Mapping_to_Events.egg-info/SOURCES.txt
+LIME_Long_read_Isoform_Mapping_to_Events.egg-info/dependency_links.txt
+LIME_Long_read_Isoform_Mapping_to_Events.egg-info/entry_points.txt
+LIME_Long_read_Isoform_Mapping_to_Events.egg-info/not-zip-safe
+LIME_Long_read_Isoform_Mapping_to_Events.egg-info/requires.txt
+LIME_Long_read_Isoform_Mapping_to_Events.egg-info/top_level.txt
