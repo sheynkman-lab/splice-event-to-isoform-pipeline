@@ -205,11 +205,13 @@ def mergeAnnotQuants(LRannot, LRquant_c1, LRquant_c2):
     return joined
     
 def getLRDict(mergedDF):
+    # Overall goal: transcript table
+    # Specific goal of this code: 
     grouped = mergedDF.groupby('transcript_id')
+    ExonsDict = {}
+    objectDictionary = {}
     for transcript_id, group in grouped:
         #initialize empty dict of exons
-        ExonsDict = {}
-        objectDictionary = {}
         #for each entry corresponding to an isoform
         for index, row in group.iterrows():
             #add all exons as lists to the dictionary
@@ -230,8 +232,12 @@ def getLRDict(mergedDF):
             tpm_c2 = row.loc["tpm_EC"]
             object = Transcript(gene_id, gene_name, transcript_id, feature, seqname, strand, tpm_c1, tpm_c2, ExonsDict)
         objectDictionary[object.UJC] = object
-    return objectDictionary
-    
+        
+        # {chr|+|ENST|0:100 : TranscriptObject}
+    print(objectDictionary)
+    return objectDictionary 
+# 75-88
+# {ENST88:TranscriptObject}
 mergeannotquant = pd.read_csv("/Volumes/sheynkman/projects/shay_thesis/output/01_tmp/02_long-read-pandas/merge_nonzero_WASH7P.csv")
 getLRDict(mergeannotquant)
 
