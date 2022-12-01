@@ -209,7 +209,7 @@ def getLRDict(mergedDF):
     for transcript_id, group in grouped:
         #initialize empty dict of exons
         ExonsDict = {}
-        objects = []
+        objectDictionary = {}
         #for each entry corresponding to an isoform
         for index, row in group.iterrows():
             #add all exons as lists to the dictionary
@@ -229,13 +229,11 @@ def getLRDict(mergedDF):
             tpm_c1 = row.loc["tpm_WTC11"]
             tpm_c2 = row.loc["tpm_EC"]
             object = Transcript(gene_id, gene_name, transcript_id, feature, seqname, strand, tpm_c1, tpm_c2, ExonsDict)
-            objects.append(object)
-    return objects
-    
+        objectDictionary[object.UJC] = object
+    return objectDictionary
     
 mergeannotquant = pd.read_csv("/Volumes/sheynkman/projects/shay_thesis/output/01_tmp/02_long-read-pandas/merge_nonzero_WASH7P.csv")
 getLRDict(mergeannotquant)
-
 
 # def makeJunctionString(exonsDict):
 #     junctionString = ""
