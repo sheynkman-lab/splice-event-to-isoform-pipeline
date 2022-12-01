@@ -1,12 +1,8 @@
 import pandas as pd
-from archive.getEvents import *
-from archive.structures import *
 import os
 from gtfparse import read_gtf
+from LIME.TranscriptClass import *
 from LIME.readData import *
-    
-
-# TO DO: REWRITE GET TRANSCRIPTS
 
 def getTranscripts(filepath):
     # making assumption that PacBio data has been converted into csv file
@@ -34,6 +30,7 @@ def getTranscripts(filepath):
             tmp_transcript = Transcript(transcript_id, ExonsDict, gene_name, gene_id)
             TranscriptDict[transcript_id] = tmp_transcript
     return TranscriptDict
+
 
 # def getTranscripts(filepath):
 #     # making assumption that PacBio data has been converted into csv file

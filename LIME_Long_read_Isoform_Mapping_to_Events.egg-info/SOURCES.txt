@@ -2,6 +2,7 @@ LICENSE
 README.md
 setup.cfg
 setup.py
+LIME/TranscriptClass.py
 LIME/getTranscripts.py
 LIME/main.py
 LIME/map.py

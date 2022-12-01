@@ -1,11 +1,12 @@
 import pandas as pd
 import os
 from gtfparse import read_gtf
+from TranscriptClass import *
 
 
 ## loading all the event data
-def loadSE(rmatsPath, type): 
-    SEpath = str(rmatsPath) + "/SE.MATS." + type + ".txt"
+def loadSE(rmatsPath, type, outputpath): 
+    SEpath = str(rmatsPath) + "/SE.MATS." + str(type) + ".txt"
     if not os.path.exists(SEpath):
         raise Exception("path not found: " + SEpath)
 
@@ -15,10 +16,13 @@ def loadSE(rmatsPath, type):
     SE["ID"] = SE.apply(lambda row: getID_specific(row, "se"), axis = 1)
     SE["incID"] = SE.apply(lambda row: getInclusionID(row, "se"), axis = 1)
     SE["excID"] = SE.apply(lambda row: getExclusionID(row, "se"), axis = 1)
+    
+    outputfile = str(outputpath) + "/SE.csv"
+    SE.to_csv(outputfile, index = False)
     return SE
 
-def loadMXE(rmatsPath, type): 
-    MXEpath = str(rmatsPath) + "/MXE.MATS." + type + ".txt"
+def loadMXE(rmatsPath, type, outputpath): 
+    MXEpath = str(rmatsPath) + "/MXE.MATS." + str(type) + ".txt"
     if not os.path.exists(MXEpath):
         raise Exception("path not found: " + MXEpath)
 
@@ -28,11 +32,13 @@ def loadMXE(rmatsPath, type):
     MXE["ID"] = MXE.apply(lambda row: getID_specific(row, "mxe"), axis = 1)
     MXE["incID"] = MXE.apply(lambda row: getInclusionID(row, "mxe"), axis = 1)
     MXE["excID"] = MXE.apply(lambda row: getExclusionID(row, "mxe"), axis = 1)
+    outputfile = str(outputpath) + "/MXE.csv"
+    MXE.to_csv(outputfile, index = False)
 
     return MXE
 
-def loadA3SS(rmatsPath, type): 
-    A3SSpath = str(rmatsPath) + "/A3SS.MATS." + type + ".txt"
+def loadA3SS(rmatsPath, type, outputpath): 
+    A3SSpath = str(rmatsPath) + "/A3SS.MATS." + str(type) + ".txt"
     if not os.path.exists(A3SSpath):
         raise Exception("path not found: " + A3SSpath)
 
@@ -42,10 +48,13 @@ def loadA3SS(rmatsPath, type):
     A3SS["ID"] = A3SS.apply(lambda row: getID_specific(row, "a3ss"), axis = 1)
     A3SS["incID"] = A3SS.apply(lambda row: getInclusionID(row, "a3ss"), axis = 1)
     A3SS["excID"] = A3SS.apply(lambda row: getExclusionID(row, "a3ss"), axis = 1)
+
+    outputfile = str(outputpath) + "/A3SS.csv"
+    A3SS.to_csv(outputfile, index = False)
     return A3SS
 
-def loadA5SS(rmatsPath, type): 
-    A5SSpath = str(rmatsPath) + "/A5SS.MATS." + type + ".txt"
+def loadA5SS(rmatsPath, type, outputpath): 
+    A5SSpath = str(rmatsPath) + "/A5SS.MATS." + str(type) + ".txt"
     if not os.path.exists(A5SSpath):
         raise Exception("path not found: " + A5SSpath)
 
@@ -55,6 +64,8 @@ def loadA5SS(rmatsPath, type):
     A5SS["ID"] = A5SS.apply(lambda row: getID_specific(row, "a5ss"), axis = 1)
     A5SS["incID"] = A5SS.apply(lambda row: getInclusionID(row, "a5ss"), axis = 1)
     A5SS["excID"] = A5SS.apply(lambda row: getExclusionID(row, "a5ss"), axis = 1)
+    outputfile = str(outputpath) + "/A5SS.csv"
+    A5SS.to_csv(outputfile, index = False)
     return A5SS
 
 
@@ -191,18 +202,14 @@ def mergeAnnotQuants(LRannot, LRquant_c1, LRquant_c2):
     print("---LR annotation and TPMs have been merged---")
     #print("-----------------------------------")
     #print(joined.tail(20))
-    
     return joined
     
-def getLRJunctionDict(mergedDF):
+def getLRDict(mergedDF):
     grouped = mergedDF.groupby('transcript_id')
-    #for all entries corresponding to each isoform
-    JunctionDict = {}
-    for transcript_id, group in grouped: 
+    for transcript_id, group in grouped:
         #initialize empty dict of exons
         ExonsDict = {}
-        js = ""
-        TranscriptToJunctionsDict = {}
+        objects = []
         #for each entry corresponding to an isoform
         for index, row in group.iterrows():
             #add all exons as lists to the dictionary
@@ -212,30 +219,32 @@ def getLRJunctionDict(mergedDF):
                 stop = row[8]
                 exonRange = [start, stop]
                 ExonsDict[exon_number] = exonRange
-        js = makeJunctionString(ExonsDict)
-        JunctionDict[transcript_id] = js
-    return JunctionDict
+            #making Transcript objects
+            gene_id = row.loc["gene_id"]
+            gene_name = row.loc["gene_name"]
+            transcript_id = row.loc["transcript_id"]
+            feature = row.loc["feature"]
+            seqname = row.loc["seqname"]
+            strand = row.loc["strand"]
+            tpm_c1 = row.loc["tpm_WTC11"]
+            tpm_c2 = row.loc["tpm_EC"]
+            object = Transcript(gene_id, gene_name, transcript_id, feature, seqname, strand, tpm_c1, tpm_c2, ExonsDict)
+            objects.append(object)
+    return objects
+    
+    
+mergeannotquant = pd.read_csv("/Volumes/sheynkman/projects/shay_thesis/output/01_tmp/02_long-read-pandas/merge_nonzero_WASH7P.csv")
+getLRDict(mergeannotquant)
 
-def makeJunctionString(exonsDict):
-    junctionString = ""
-    for i in exonsDict:
-        if i+1 in exonsDict:
-            exon = exonsDict[i]
-            next_exon = exonsDict[i+1]
-            junction = str(exon[1]) + "-" + str(next_exon[0])
-            junctionString = junctionString + junction
-            if i+2 in exonsDict:
-                junctionString += ":"
-    return junctionString
 
-
-# working on this function
-def addJunctionsToTable(mergedDF, junctionsDict):
-    transcriptDF = mergedDF[mergedDF["feature"] == "transcript"]
-    newDF = pd.DataFrame(columns = list(transcriptDF.columns))
-    # for index, row in transcriptDF.iterrows():
-    #     transcript_id = row["transcript_id"]
-    #     row["junctionString"] = junctionsDict[transcript_id]
-    #     newDF = pd.concat([newDF, row], ignore_index = True)
-    # print(newDF.head)
-    return newDF
+# def makeJunctionString(exonsDict):
+#     junctionString = ""
+#     for i in exonsDict:
+#         if i+1 in exonsDict:
+#             exon = exonsDict[i]
+#             next_exon = exonsDict[i+1]
+#             junction = str(exon[1]) + "-" + str(next_exon[0])
+#             junctionString = junctionString + junction
+#             if i+2 in exonsDict:
+#                 junctionString += ":"
+#     return junctionString
