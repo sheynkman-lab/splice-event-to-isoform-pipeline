@@ -1,11 +1,11 @@
 import pandas as pd
 import os
 from gtfparse import read_gtf
-from TranscriptClass import *
+from LIME.TranscriptClass import *
 
 
 ## loading all the event data
-def loadSE(rmatsPath, type, outputpath): 
+def loadSE(rmatsPath, type, outputpath):
     SEpath = str(rmatsPath) + "/SE.MATS." + str(type) + ".txt"
     if not os.path.exists(SEpath):
         raise Exception("path not found: " + SEpath)
@@ -232,23 +232,9 @@ def getLRDict(mergedDF):
             tpm_c2 = row.loc["tpm_EC"]
             object = Transcript(gene_id, gene_name, transcript_id, feature, seqname, strand, tpm_c1, tpm_c2, ExonsDict)
         objectDictionary[object.UJC] = object
-        
         # {chr|+|ENST|0:100 : TranscriptObject}
-    print(objectDictionary)
-    return objectDictionary 
-# 75-88
-# {ENST88:TranscriptObject}
-mergeannotquant = pd.read_csv("/Volumes/sheynkman/projects/shay_thesis/output/01_tmp/02_long-read-pandas/merge_nonzero_WASH7P.csv")
-getLRDict(mergeannotquant)
+    #print(objectDictionary)
+    return objectDictionary
 
-# def makeJunctionString(exonsDict):
-#     junctionString = ""
-#     for i in exonsDict:
-#         if i+1 in exonsDict:
-#             exon = exonsDict[i]
-#             next_exon = exonsDict[i+1]
-#             junction = str(exon[1]) + "-" + str(next_exon[0])
-#             junctionString = junctionString + junction
-#             if i+2 in exonsDict:
-#                 junctionString += ":"
-#     return junctionString
+# mergeannotquant = pd.read_csv("/Volumes/sheynkman/projects/shay_thesis/output/01_tmp/02_long-read-pandas/merge_nonzero_WASH7P.csv")
+# getLRDict(mergeannotquant)

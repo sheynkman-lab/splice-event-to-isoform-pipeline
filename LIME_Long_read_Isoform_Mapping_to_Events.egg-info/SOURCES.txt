@@ -4,6 +4,7 @@ setup.cfg
 setup.py
 LIME/TranscriptClass.py
 LIME/getTranscripts.py
+LIME/intermediateDataDownload.py
 LIME/main.py
 LIME/map.py
 LIME/readData.py

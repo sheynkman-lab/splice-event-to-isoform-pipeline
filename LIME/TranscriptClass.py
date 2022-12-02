@@ -29,7 +29,7 @@ class Transcript():
             if i+1 in exonsdict:
                 exon = exonsdict[i]
                 next_exon = exonsdict[i+1]
-                junction = str(exon[1]) + "-" + str(next_exon[0])
+                junction = str(exon[1]) + "-" + str(next_exon[0]-1)
                 junctionString = junctionString + junction
                 if i+2 in exonsdict:
                     junctionString = junctionString + ":"

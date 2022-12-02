@@ -2,6 +2,7 @@ import pandas as pd
 from pathlib import Path
 import click
 from LIME.readData import *
+from LIME.map import *
 from gtfparse import read_gtf
 
 
@@ -21,18 +22,21 @@ from gtfparse import read_gtf
 
 def cli(condition1: str, condition2: str, rmats_out_folder: Path, type: str, c1_quantcol: str, c2_quantcol: str, c1annot: Path, c1quant: Path, c2quant: Path, outputpath: Path):
     click.echo('')
-    se = loadSE(rmats_out_folder, type)
-    mxe = loadMXE(rmats_out_folder, type)
-    a3ss = loadA3SS(rmats_out_folder, type)
-    a5ss = loadA5SS(rmats_out_folder, type)
+    se = loadSE(rmats_out_folder, type, str(outputpath))
+    mxe = loadMXE(rmats_out_folder, type, str(outputpath))
+    a3ss = loadA3SS(rmats_out_folder, type, str(outputpath))
+    a5ss = loadA5SS(rmats_out_folder, type, str(outputpath))
 
-#     lrannot = loadLRannot(c1annot)
-#     lrquant_c1 = loadLRquant(c1quant, c1_quantcol, condition1)
-#     lrquant_c2 = loadLRquant(c2quant, c2_quantcol, condition2)
+    lrannot = loadLRannot(c1annot)
+    lrquant_c1 = loadLRquant(c1quant, c1_quantcol, condition1)
+    lrquant_c2 = loadLRquant(c2quant, c2_quantcol, condition2)
 
-#     lr_alldata = mergeAnnotQuants(lrannot, lrquant_c1, lrquant_c2)
+    lr_alldata = mergeAnnotQuants(lrannot, lrquant_c1, lrquant_c2)
+    objectDictionary = getLRDict(lr_alldata)
+    df = mapper(objectDictionary, se, str(outputpath))
+    print(df)
+    # outputfile = str(outputpath) + "/mappingtable.csv"
+    # df.to_csv(outputfile, index = False)
 
-    #JunctionDict = getLRJunctionDict(lr_alldata) 
-    # addJunctionsToTable(lr_alldata, JunctionDict)
-    # map(lr_alldata, [se, mxe, a3ss, a5ss])
+
     
